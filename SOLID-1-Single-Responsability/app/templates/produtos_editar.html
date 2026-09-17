@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block titulo_pagina %}
+    <h2 class="titulo_pagina">{{ acao }} de Produto</h2>
+{% endblock %}
+
+{% block conteudo %}
+
+<form {% if acao == 'Inclusão' %} action="{% url 'produtos_incluir' %}" {% elif acao == 'Alteração' %} action="{% url 'produtos_alterar' form.id.value %}" {% elif acao == 'Exclusão' %} action="{% url 'produtos_excluir' form.id.value %}" {% endif %} method="post">
+
+    {% csrf_token %}
+    
+    {% if acao == 'Exclusão' %}
+        <p>Deseja realmente excluir este registro?</p>
+        <br>
+
+        <fieldset disabled>
+    {% endif%}
+
+
+
+    <!-- CAMPOS DEFINIDOS NO FORMULARIO -->
+    {{ form.as_p}}
+
+    <br><br>
+
+    <label for=""></label>
+    {% if acao == 'Exclusão' %}
+        </fieldset>
+        <input class="btn-del" type="submit" value="Excluir">
+    {% else %}
+        <button class="btn" type="submit">Salvar</button>
+    {% endif %}
+    &nbsp;
+    <a class="btn-def" href="{% url 'produtos' %}">Cancelar</a>        
+
+</form>
+
+{% endblock %}
