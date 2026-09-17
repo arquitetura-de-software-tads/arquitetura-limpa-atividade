@@ -6,12 +6,15 @@ class ConexaoDB(IConexaoDB):
         conexao = connect('db_solid.sqlite3')
         conexao.execute("PRAGMA foreign_keys = ON;")
     
-    def executar_comando(self, sql_comando):
+    def executar_comando(self, sql_comando, commit):
         conexao = ConexaoDB.obter_conexao()
         conexao.cursor().execute(sql_comando)
-        conexao.commit()
+        if commit: conexao.commit()
 
     def executar_select(self, sql_select):
         conexao = ConexaoDB.obter_conexao()
-        registros = conexao.cursor().execute(sql_select).fetchall()
+        if "WHERE id=" in sql_select:
+            registros = conexao.cursor().execute(sql_select).fetchone()
+        else:
+            registros = conexao.cursor().execute(sql_select).fetchall()
         return registros
