@@ -12,7 +12,7 @@ class ConexaoDB(IConexaoDB):
         if commit: conexao.commit()
 
     def executar_select(self, sql_select):
-        conexao = ConexaoDB.obter_conexao()
+        conexao = self.obter_conexao()
         if "WHERE id=" in sql_select:
             registros = conexao.cursor().execute(sql_select).fetchone()
         else:

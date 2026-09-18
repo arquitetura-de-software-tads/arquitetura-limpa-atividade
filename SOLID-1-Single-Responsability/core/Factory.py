@@ -1,12 +1,26 @@
-from dao.interfaces.ICategoriaDAO import ICategoriaDAO
-from dao.interfaces.IProdutoDAO import IProdutoDAO
 from dao.CategoriaDAO import CategoriaDAO
-from dao.ProdutoDAO import ProdutoDAO 
+from dao.ProdutoDAO import ProdutoDAO
 from dao.ConexaoDB import ConexaoDB 
+from repository.CategoriaRepository import CategoriaRepository
+from repository.ProdutoRepository import ProdutoRepository
 
-class Factory():
-    def obter_conexao_db(self):
+class Factory:
+    @staticmethod
+    def obter_conexao_db():
         return ConexaoDB()
+
+    @staticmethod
+    def obter_produto_dao():
+        return ProdutoDAO(Factory.obter_conexao_db())
+
+    @staticmethod
+    def obter_categoria_dao():
+        return CategoriaDAO(Factory.obter_conexao_db())
+
+    @staticmethod
+    def obter_categoria_repository():
+        return CategoriaRepository(Factory.obter_categoria_dao())
     
-    def obter_produto(self):
-        return ProdutoDAO(self.obter_conexao_db())
+    @staticmethod
+    def obter_produto_repository():
+        return ProdutoRepository(Factory.obter_produto_dao())
