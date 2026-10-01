@@ -1,11 +1,8 @@
 from entities.dominio import ServicoDominio
 from ports.interfaces_dao import IServicoDAO
 
-class ServicoRepository(IServicoDAO):
-    
-    def __init__(self, dao)
+class ServicoRepository():
 
-
-    
-    def listar(self):
+    def __init__(self, dao: IServicoDAO):
+        
         
